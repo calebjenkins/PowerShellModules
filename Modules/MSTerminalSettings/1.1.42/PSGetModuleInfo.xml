@@ -1,0 +1,167 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">MSTerminalSettings</S>
+      <Version N="Version">1.1.42</Version>
+      <S N="Type">Module</S>
+      <S N="Description">Manage MS Terminal settings</S>
+      <S N="Author">Chris Duck</S>
+      <S N="CompanyName">gpduck</S>
+      <S N="Copyright">(c) Chris Duck. All rights reserved.</S>
+      <DT N="PublishedDate">2019-09-18T04:25:24-05:00</DT>
+      <Obj N="InstalledDate" RefId="1">
+        <DT>2021-02-01T19:05:59.2322527-06:00</DT>
+        <MS>
+          <Obj N="DisplayHint" RefId="2">
+            <TN RefId="1">
+              <T>Microsoft.PowerShell.Commands.DisplayHintType</T>
+              <T>System.Enum</T>
+              <T>System.ValueType</T>
+              <T>System.Object</T>
+            </TN>
+            <ToString>DateTime</ToString>
+            <I32>2</I32>
+          </Obj>
+        </MS>
+      </Obj>
+      <Nil N="UpdatedDate" />
+      <Nil N="LicenseUri" />
+      <URI N="ProjectUri">https://github.com/gpduck/MSTerminalSettings</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="3">
+        <TN RefId="2">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>PSEdition_Core</S>
+          <S>PSEdition_Desktop</S>
+          <S>Windows</S>
+          <S>Terminal</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="4">
+        <TN RefId="3">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="2" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="6">
+              <TNRef RefId="2" />
+              <LST>
+                <S>Add-MSTerminalWordDelimiter</S>
+                <S>ConvertFrom-Iterm2ColorScheme</S>
+                <S>Find-MSTerminalFolder</S>
+                <S>Get-MSTerminalColorScheme</S>
+                <S>Get-MSTerminalProfile</S>
+                <S>Get-MSTerminalSetting</S>
+                <S>Import-Iterm2ColorScheme</S>
+                <S>New-MSTerminalColorScheme</S>
+                <S>New-MSTerminalColorTable</S>
+                <S>New-MSTerminalProfile</S>
+                <S>Remove-MSTerminalColorScheme</S>
+                <S>Remove-MSTerminalProfile</S>
+                <S>Remove-MSTerminalWordDelimiter</S>
+                <S>Set-MSTerminalProfile</S>
+                <S>Set-MSTerminalSetting</S>
+                <S>Set-MSTerminalTargetInstallation</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="5" />
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="7">
+              <TNRef RefId="2" />
+              <LST>
+                <S>Add-MSTerminalWordDelimiter</S>
+                <S>ConvertFrom-Iterm2ColorScheme</S>
+                <S>Find-MSTerminalFolder</S>
+                <S>Get-MSTerminalColorScheme</S>
+                <S>Get-MSTerminalProfile</S>
+                <S>Get-MSTerminalSetting</S>
+                <S>Import-Iterm2ColorScheme</S>
+                <S>New-MSTerminalColorScheme</S>
+                <S>New-MSTerminalColorTable</S>
+                <S>New-MSTerminalProfile</S>
+                <S>Remove-MSTerminalColorScheme</S>
+                <S>Remove-MSTerminalProfile</S>
+                <S>Remove-MSTerminalWordDelimiter</S>
+                <S>Set-MSTerminalProfile</S>
+                <S>Set-MSTerminalSetting</S>
+                <S>Set-MSTerminalTargetInstallation</S>
+              </LST>
+            </Obj>
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">Update MSTerminalSettings.psm1 for v0.4.2382.0_x000D__x000A__x000D__x000A_Adds new localstate profile path to search paths</S>
+      <Obj N="Dependencies" RefId="8">
+        <TNRef RefId="2" />
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="9">
+        <TN RefId="4">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) Chris Duck. All rights reserved.</S>
+          <S N="description">Manage MS Terminal settings</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">Update MSTerminalSettings.psm1 for v0.4.2382.0_x000D__x000A__x000D__x000A_Adds new localstate profile path to search paths</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">False</S>
+          <S N="versionDownloadCount">978</S>
+          <S N="downloadCount">1775</S>
+          <S N="packageSize">32999</S>
+          <S N="published">9/18/2019 4:25:24 AM -05:00</S>
+          <S N="created">9/18/2019 4:25:24 AM -05:00</S>
+          <S N="lastUpdated">2/1/2021 5:12:01 PM -06:00</S>
+          <S N="tags">PSEdition_Core PSEdition_Desktop Windows Terminal PSModule PSFunction_Add-MSTerminalWordDelimiter PSCommand_Add-MSTerminalWordDelimiter PSFunction_ConvertFrom-Iterm2ColorScheme PSCommand_ConvertFrom-Iterm2ColorScheme PSFunction_Find-MSTerminalFolder PSCommand_Find-MSTerminalFolder PSFunction_Get-MSTerminalColorScheme PSCommand_Get-MSTerminalColorScheme PSFunction_Get-MSTerminalProfile PSCommand_Get-MSTerminalProfile PSFunction_Get-MSTerminalSetting PSCommand_Get-MSTerminalSetting PSFunction_Import-Iterm2ColorScheme PSCommand_Import-Iterm2ColorScheme PSFunction_New-MSTerminalColorScheme PSCommand_New-MSTerminalColorScheme PSFunction_New-MSTerminalColorTable PSCommand_New-MSTerminalColorTable PSFunction_New-MSTerminalProfile PSCommand_New-MSTerminalProfile PSFunction_Remove-MSTerminalColorScheme PSCommand_Remove-MSTerminalColorScheme PSFunction_Remove-MSTerminalProfile PSCommand_Remove-MSTerminalProfile PSFunction_Remove-MSTerminalWordDelimiter PSCommand_Remove-MSTerminalWordDelimiter PSFunction_Set-MSTerminalProfile PSCommand_Set-MSTerminalProfile PSFunction_Set-MSTerminalSetting PSCommand_Set-MSTerminalSetting PSFunction_Set-MSTerminalTargetInstallation PSCommand_Set-MSTerminalTargetInstallation PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2021-02-01T17:12:01Z</S>
+          <S N="NormalizedVersion">1.1.42</S>
+          <S N="Authors">Chris Duck</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">MSTerminalSettings.nuspec|MSTerminalSettings.psd1|MSTerminalSettings.psm1|ArgumentCompleters\ColorScheme.ps1|ArgumentCompleters\Profile.ps1|en-US\about_MSTerminalSettings.help.help.txt|en-US\MSTerminalSettings-help.xml|ExportedFunctions\Add-MSTerminalWordDelimiter.ps1|ExportedFunctions\ConvertFrom-Iterm2ColorScheme.ps1|ExportedFunctions\Find-MSTerminalFolder.ps1|ExportedFunctions\Get-MSTerminalColorScheme.ps1|ExportedFunctions\Get-MSTerminalProfile.ps1|ExportedFunctions\Get-MSTerminalSetting.ps1|ExportedFunctions\Import-Iterm2ColorScheme.ps1|ExportedFunctions\New-MSTerminalColorScheme.ps1|ExportedFunctions\New-MSTerminalColorTable.ps1|ExportedFunctions\New-MSTerminalProfile.ps1|ExportedFunctions\Remove-MSTerminalColorScheme.ps1|ExportedFunctions\Remove-MSTerminalProfile.ps1|ExportedFunctions\Remove-MSTerminalWordDelimiter.ps1|ExportedFunctions\Set-MSTerminalProfile.ps1|ExportedFunctions\Set-MSTerminalSetting.ps1|ExportedFunctions\Set-MSTerminalTargetInstallation.ps1|InternalFunctions\ConvertPSObjectToHashtable.ps1|InternalFunctions\CopyHashtable.ps1|InternalFunctions\ResolveWellKnownPaths.ps1</S>
+          <S N="GUID">7fa966d3-5be1-4491-be9e-ee0a5059e7c6</S>
+          <S N="CompanyName">Unknown</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Users\Caleb\OneDrive\Documents\PowerShell\Modules\MSTerminalSettings\1.1.42</S>
+    </MS>
+  </Obj>
+</Objs>
