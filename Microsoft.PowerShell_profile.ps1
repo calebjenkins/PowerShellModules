@@ -5,10 +5,10 @@ Import-Module -Name Terminal-Icons
 # While editing this. Use > . $PROFILE
 # to reload current powershell profile changes
 
-if ($host.Name -eq 'ConsoleHost')
-{
-    Import-Module PSReadLine
-}
+# if ($host.Name -eq 'ConsoleHost')
+# {
+#     Import-Module PSReadLine
+# }
 
 Set-Theme Paramox
 
@@ -174,39 +174,39 @@ function _checkIntValue{
 #                          }
 # }
 
-Set-PSReadLineKeyHandler -Key Ctrl+b `
-                         -BriefDescription BuildCurrentDirectory `
-                         -LongDescription "dotnet Build the current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet build")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
+# Set-PSReadLineKeyHandler -Key Ctrl+b `
+#                          -BriefDescription BuildCurrentDirectory `
+#                          -LongDescription "dotnet Build the current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet build")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
 
-Set-PSReadLineKeyHandler -Key Ctrl+t `
-                         -BriefDescription TestCurrentDirectory `
-                         -LongDescription "dotnet Test the current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet test")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
-#set-HotKey ("Ctrl+t", "dotnet Test the current directory", "dotnet test")
+# Set-PSReadLineKeyHandler -Key Ctrl+t `
+#                          -BriefDescription TestCurrentDirectory `
+#                          -LongDescription "dotnet Test the current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet test")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
+# #set-HotKey ("Ctrl+t", "dotnet Test the current directory", "dotnet test")
 
-Set-PSReadLineKeyHandler -Key Ctrl+r `
-                         -BriefDescription TestCurrentDirectory `
-                         -LongDescription "dotnet Restore the current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet restore")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
+# Set-PSReadLineKeyHandler -Key Ctrl+r `
+#                          -BriefDescription TestCurrentDirectory `
+#                          -LongDescription "dotnet Restore the current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet restore")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
 
-Set-PSReadLineKeyHandler -Key Ctrl+. `
-                         -BriefDescription TestCurrentDirectory `
-                         -LongDescription "Open git url for current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("gitw")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
+# Set-PSReadLineKeyHandler -Key Ctrl+. `
+#                          -BriefDescription TestCurrentDirectory `
+#                          -LongDescription "Open git url for current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("gitw")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
