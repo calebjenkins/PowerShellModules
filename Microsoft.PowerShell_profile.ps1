@@ -12,6 +12,7 @@ Import-Module -Name Terminal-Icons
 
 Set-Theme Paramox
 
+Set-Alias Rename Move-Item
 function FindFile{
     param ( [string]$filePattern)
     Get-ChildItem -Recurse -Filter $filePattern
@@ -32,9 +33,41 @@ function DirSize {
     [PSCustomObject]@{ "Folder" = $Folder; "SubFolderCount" = $folderCount; "FileCount" = $fileCount; "TotalSize (MB)" = $fileSize}
 }
 
-function GitW {
+function Open-Folder {
+    param ( [string]$FilePath )
+    _checkParam $FilePath "Please provide a file path to use this command"
 
-    $repoUrl = git config --get remote.origin.url
+    $folderPath = $FilePath
+
+    if( (Get-Item $FilePath) -isnot [System.IO.DirectoryInfo]){
+        $folderPath = Split-Path -Path $FilePath
+    }
+
+    explorer.exe $folderPath
+}
+
+Set-Alias GetFolder Get-PathToFolder
+function Get-PathToFolder
+{
+    param ([string]$FilePath )
+    _checkParam $FilePath "Please provide a file path to use this command"
+
+    $folderPath = $FilePath
+
+    if( (Get-Item $FilePath) -isnot [System.IO.DirectoryInfo] ){
+        $folderPath = Split-Path -Path $FilePath
+    }
+
+    return $folderPath
+}
+
+function GitW {
+    param ([Parameter()] [string] $RemoteName = "origin" )
+
+    $remote = "remote." + $RemoteName + ".url"
+
+    $repoUrl = git config --get $remote
+    
     if(!$repoUrl)
     {
         Write-Output " No git URL found"
@@ -63,21 +96,22 @@ function gitc {
 }
 
 function pshelp {
-    param ( [Parameter()] [string] $Message)
+    $Message = _argsToString $args
     _checkParam $Message "Search string is needed for PSHelp"
 
     websearch "PowerShell $Message"
 }
 
 # Open Browser, Search Bing for Sring that is passed in
+Set-Alias whelp websearch #web help
 function websearch {
-    param ( [Parameter()] [string] $Message)
+    $Message = _argsToString $args
     
     _web-lookup $Message "https://www.bing.com/search?q="
 }
 
 function websearchg {
-    param ( [Parameter()] [string] $Message)
+    $Message = _argsToString $args
     
     _web-lookup $Message "https://www.google.com/search?q="
 }
@@ -115,10 +149,7 @@ function websearchg {
 
 Set-Alias web Open-Web
 function Open-Web {
-    param (
-        [Parameter()] [string] $Message
-    )
-
+    $Message = _argsToString $args
     _checkParam $Message "Please include a URL in web command."
 
     Start-Process msedge $Message
@@ -139,6 +170,17 @@ function _checkParam {
     }
 }
 
+function _argsToString
+{
+    $stringArray = ''
+
+    foreach ($param in $args)
+    {
+        $stringArray = $stringArray + ' ' + $param
+    }
+
+    return $stringArray.Trim()
+}
 function _checkIntValue{
     param (
         [Parameter(Mandatory = $true)] [int] $Value,
@@ -174,39 +216,39 @@ function _checkIntValue{
 #                          }
 # }
 
-# Set-PSReadLineKeyHandler -Key Ctrl+b `
-#                          -BriefDescription BuildCurrentDirectory `
-#                          -LongDescription "dotnet Build the current directory" `
-#                          -ScriptBlock {
-#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet build")
-#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-# }
+Set-PSReadLineKeyHandler -Key Ctrl+b `
+                         -BriefDescription BuildCurrentDirectory `
+                         -LongDescription "dotnet Build the current directory" `
+                         -ScriptBlock {
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet build")
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
 
-# Set-PSReadLineKeyHandler -Key Ctrl+t `
-#                          -BriefDescription TestCurrentDirectory `
-#                          -LongDescription "dotnet Test the current directory" `
-#                          -ScriptBlock {
-#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet test")
-#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-# }
-# #set-HotKey ("Ctrl+t", "dotnet Test the current directory", "dotnet test")
+Set-PSReadLineKeyHandler -Key Ctrl+t `
+                         -BriefDescription TestCurrentDirectory `
+                         -LongDescription "dotnet Test the current directory" `
+                         -ScriptBlock {
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet test")
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
+#set-HotKey ("Ctrl+t", "dotnet Test the current directory", "dotnet test")
 
-# Set-PSReadLineKeyHandler -Key Ctrl+r `
-#                          -BriefDescription TestCurrentDirectory `
-#                          -LongDescription "dotnet Restore the current directory" `
-#                          -ScriptBlock {
-#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet restore")
-#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-# }
+Set-PSReadLineKeyHandler -Key Ctrl+r `
+                         -BriefDescription TestCurrentDirectory `
+                         -LongDescription "dotnet Restore the current directory" `
+                         -ScriptBlock {
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet restore")
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
 
-# Set-PSReadLineKeyHandler -Key Ctrl+. `
-#                          -BriefDescription TestCurrentDirectory `
-#                          -LongDescription "Open git url for current directory" `
-#                          -ScriptBlock {
-#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("gitw")
-#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-# }
+Set-PSReadLineKeyHandler -Key Ctrl+. `
+                         -BriefDescription TestCurrentDirectory `
+                         -LongDescription "Open git url for current directory" `
+                         -ScriptBlock {
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("gitw")
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
