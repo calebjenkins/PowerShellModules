@@ -64,31 +64,18 @@ function Get-PathToFolder
 function GitW {
     param ([Parameter()] [string] $RemoteName = "origin" )
 
-    $remote = "remote." + $RemoteName + ".url"
+    _ValidateFolderHasGitRemote
 
-    $repoUrl = git config --get $remote
-    
-    if(!$repoUrl)
-    {
-        Write-Output " No git URL found"
-        break
-    }
+    $repoUrl = _getGitRemoteURL $RemoteName
 
     # Start-Process chrome $repoUrl
     Start-Process $repoUrl
 }
 
 function gitc {
-    param (
-        [Parameter()] [string] $Message
-        )
+    param ([Parameter()] [string] $Message)
 
-    $repoUrl = git config --get remote.origin.url
-    if(!$repoUrl)
-    {
-        Write-Output " No git URL found"
-        break
-    }
+    _ValidateFolderHasGitRemote
 
     git add .
     git commit -m "$message"
@@ -154,6 +141,49 @@ function Open-Web {
 
     Start-Process msedge $Message
 }
+
+Set-Alias gitignore Add-GitIgnoreFile
+function Add-GitIgnoreFile {
+   Invoke-WebRequest -Uri https://raw.githubusercontent.com/github/gitignore/main/VisualStudio.gitignore -OutFile .\.gitignore
+}
+
+Set-Alias gitinit Initialize-GitRepo
+function Initialize-GitRepo {
+
+    if(Test-Path .\.git -PathType Container)
+    {
+        Write-Output 'Git repo already exists'
+        break
+    }
+
+    git init
+    Create-GitIgnoreFile
+    git add .
+    git commit -m "initial commit"
+
+}
+
+function _ValidateFolderHasGitRemote
+{
+    param ( [Parameter()] [string] $remoteName = "origin")
+    $repoUrl = _getGitRemoteURL $remoteName
+
+    if(!$repoUrl)
+    {
+        Write-Output "No git URL found"
+        break
+    }
+}
+
+function _getGitRemoteURL{
+    param ( [Parameter()] [string] $remoteName = "origin")
+
+    $remote = 'remote.' + $remoteName + '.url'
+
+    $repoUrl = git config --get $remote
+    return $repoUrl
+}
+
 
 ### Private Functions _ ##
 
