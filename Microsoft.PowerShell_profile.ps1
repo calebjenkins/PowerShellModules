@@ -144,7 +144,16 @@ function Open-Web {
 
 Set-Alias gitignore Add-GitIgnoreFile
 function Add-GitIgnoreFile {
-   Invoke-WebRequest -Uri https://raw.githubusercontent.com/github/gitignore/main/VisualStudio.gitignore -OutFile .\.gitignore
+
+    if((Test-Path .\.git -PathType Container) -eq $false)
+    {
+        Write-Warning ' No git repo in this directory. Try git init instead or navigate to root git folder'
+        Write-Output '' 
+    }
+    
+    Write-Output "Creating .gitignore file from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore"
+
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/github/gitignore/main/VisualStudio.gitignore -OutFile .\.gitignore
 }
 
 Set-Alias gitinit Initialize-GitRepo
