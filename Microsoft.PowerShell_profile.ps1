@@ -159,7 +159,7 @@ function Add-GitIgnoreFile {
 Set-Alias gitinit Initialize-GitRepo
 function Initialize-GitRepo {
 
-    if(Test-Path .\.git -PathType Container)
+    if(git rev-parse --is-inside-work-tree)
     {
         Write-Output 'Git repo already exists'
         break
