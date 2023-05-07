@@ -142,34 +142,64 @@ function Open-Web {
     Start-Process msedge $Message
 }
 
-Set-Alias gitignore Add-GitIgnoreFile
-function Add-GitIgnoreFile {
-
-    if((Test-Path .\.git -PathType Container) -eq $false)
-    {
-        Write-Warning ' No git repo in this directory. Try git init instead or navigate to root git folder'
-        Write-Output '' 
-    }
-    
-    Write-Output "Creating .gitignore file from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore"
-
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/github/gitignore/main/VisualStudio.gitignore -OutFile .\.gitignore
-}
-
 Set-Alias gitinit Initialize-GitRepo
 function Initialize-GitRepo {
+    param(
+        [Parameter(Position=0)] [string] $IgnoreStyle = "VisualStudio"
+    )
 
-    if(git rev-parse --is-inside-work-tree)
+    if(_isGitRepo)
     {
-        Write-Output 'Git repo already exists'
+        Write-Warning 'Git repo already exists'
         break
     }
 
     git init
-    Create-GitIgnoreFile
+    Add-GitIgnoreFile
     git add .
     git commit -m "initial commit"
 
+}
+
+Set-Alias gitignore Add-GitIgnoreFile
+function Add-GitIgnoreFile {
+    param(
+        [Parameter(Position=0)] [string] $IgnoreStyle = "VisualStudio",
+        [Parameter(Position=1)] [bool] $suppressWarning = $false
+    )
+
+    if((_isGitRepo -eq $false) -and ($suppressWarning -eq $true))
+    {
+        Write-Warning ' No git repo in this directory. Try git init instead or navigate to root git folder'
+        Write-Output '' 
+    }
+
+    $ignoreFile = "https://raw.githubusercontent.com/github/gitignore/main/" + $IgnoreStyle + ".gitignore"
+    Write-Output "Creating .gitignore file from https://github.com/github/gitignore/blob/main/" + $IgnoreStyle + ".gitignore"
+
+    try {
+        Invoke-WebRequest -Uri $ignoreFile -OutFile .\.gitignore    
+    }
+    catch {
+        Write-Output 'Ignore file not found'
+        Write-Host -NoNewline 'Press Enter or Y to check web resource'
+
+        $keypress = [System.Console]::ReadKey($true)
+        if(($keypress.KeyChar -eq 'Enter' ) -or ($keypress.KeyChar -eq 'Y') -or ($keypress.KeyChar -eq 'y' ))
+        {
+            Open-Web 'https://github.com/github/gitignore'
+        }
+    }
+}
+
+function _isGitRepo{
+    $result = git rev-parse --is-inside-work-tree
+    if($result -contains 'fatal')
+    {
+        $result = $false
+    }
+
+    return $result
 }
 
 function _ValidateFolderHasGitRemote
