@@ -73,7 +73,8 @@ function GitW {
 }
 
 function gitc {
-    param ([Parameter()] [string] $Message)
+    $Message = _argsToString $args
+    _checkParam $Message "Please include comment text for this commit."
 
     _ValidateFolderHasGitRemote
 
