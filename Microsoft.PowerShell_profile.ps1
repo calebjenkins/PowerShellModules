@@ -1,16 +1,52 @@
-Import-Module posh-git
-Import-Module oh-my-posh
-Import-Module -Name Terminal-Icons
+# Import-Module posh-git
+# Import-Module -Name Terminal-Icons
 
-# While editing this. Use > . $PROFILE
-# to reload current powershell profile changes
+# # While editing this. Use > . $PROFILE
+# # to reload current powershell profile changes
 
-# if ($host.Name -eq 'ConsoleHost')
-# {
-#     Import-Module PSReadLine
-# }
 
-Set-Theme Paramox
+
+## Moving to top since we're using this on the start up. 
+function _checkParam {
+    param (
+        [Parameter()] [string] $Value,
+        [Parameter()] [string] $ErrorMessage
+    )
+
+    if( (!$Value) -or ($Value -eq '') )
+    {
+        Write-Output $ErrorMessage
+        break
+    }
+}
+
+Set-Alias Theme Set-PoshTheme
+function Set-PoshTheme
+{
+    param (
+        [string]$themeName,
+        [string]$source = $env:POSH_THEMES_PATH)
+    _checkParam $themeName
+
+    $pathToTheme = $source + "\" + $themeName + ".omp.json"
+
+    $exists = Test-Path -Path $pathToTheme -PathType Leaf
+    if ($exists -eq $false)
+    {
+        Write-Output "Theme not found"
+        break
+    }
+
+    oh-my-posh init pwsh --config $pathToTheme | Invoke-Expression
+}
+
+## SET UP ##
+# Before you can use oh-my-posh on Windows: #
+# > winget install janDeDobbeleer.OhMyPosh
+# > oh-my-posh font install 
+$env:POSH_GIT_ENABLED = $true
+# Set-PoshTheme uniForm
+
 
 Set-Alias Rename Move-Item
 function FindFile{
@@ -227,19 +263,6 @@ function _getGitRemoteURL{
 
 ### Private Functions _ ##
 
-function _checkParam {
-    param (
-        [Parameter()] [string] $Value,
-        [Parameter()] [string] $ErrorMessage
-    )
-
-    if( (!$Value) -or ($Value -eq '') )
-    {
-        Write-Output $ErrorMessage
-        break
-    }
-}
-
 function _argsToString
 {
     $stringArray = ''
@@ -286,39 +309,39 @@ function _checkIntValue{
 #                          }
 # }
 
-Set-PSReadLineKeyHandler -Key Ctrl+b `
-                         -BriefDescription BuildCurrentDirectory `
-                         -LongDescription "dotnet Build the current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet build")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
+# Set-PSReadLineKeyHandler -Key Ctrl+b `
+#                          -BriefDescription BuildCurrentDirectory `
+#                          -LongDescription "dotnet Build the current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet build")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
 
-Set-PSReadLineKeyHandler -Key Ctrl+t `
-                         -BriefDescription TestCurrentDirectory `
-                         -LongDescription "dotnet Test the current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet test")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
-#set-HotKey ("Ctrl+t", "dotnet Test the current directory", "dotnet test")
+# Set-PSReadLineKeyHandler -Key Ctrl+t `
+#                          -BriefDescription TestCurrentDirectory `
+#                          -LongDescription "dotnet Test the current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet test")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
+# #set-HotKey ("Ctrl+t", "dotnet Test the current directory", "dotnet test")
 
-Set-PSReadLineKeyHandler -Key Ctrl+r `
-                         -BriefDescription TestCurrentDirectory `
-                         -LongDescription "dotnet Restore the current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet restore")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
+# Set-PSReadLineKeyHandler -Key Ctrl+r `
+#                          -BriefDescription TestCurrentDirectory `
+#                          -LongDescription "dotnet Restore the current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dotnet restore")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
 
-Set-PSReadLineKeyHandler -Key Ctrl+. `
-                         -BriefDescription TestCurrentDirectory `
-                         -LongDescription "Open git url for current directory" `
-                         -ScriptBlock {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("gitw")
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-}
+# Set-PSReadLineKeyHandler -Key Ctrl+. `
+#                          -BriefDescription TestCurrentDirectory `
+#                          -LongDescription "Open git url for current directory" `
+#                          -ScriptBlock {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("gitw")
+#     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+# }
