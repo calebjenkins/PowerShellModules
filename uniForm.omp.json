@@ -135,7 +135,7 @@
       "c-exec-normal": "#FFFF00",
       "c-exec-slow": "#FFD180",
       "c-exec-slower": "#FF867F",
-      "c-git-ahead": "#6EFFFF",
+      "c-git-ahead": "#dd6eff",
       "c-git-behind": "#FFA06D",
       "c-git-ahead-behind": "#C0CFFF",
       "c-git-normal": "#66FFA6",
@@ -161,7 +161,7 @@
       "c-wakatime-overtime": "#FF8A80"
     },
     "transient_prompt": {
-      "template": " <p:c-badge-return-success>\uE0B6⚡</p> {{ .Segments.Executiontime.FormattedMs }}\uE0B4</> "
+     "template": "{{ if eq \"False\" (title (default \"False\" .Env.DISABLE_SEGMENT_TRANSIENT)) }}<{{ if eq .Code 0 }}p:c-badge-return-success{{ else if or (eq .Code 1) (eq .Code 130) }}p:c-badge-return-fail-term{{ else }}p:c-badge-return-custom{{ end }}>\uE0B6</><p:c-badge-text,{{ if eq .Code 0 }}p:c-badge-return-success{{ else if or (eq .Code 1) (eq .Code 130) }}p:c-badge-return-fail-term{{ else }}p:c-badge-return-custom{{ end }}>⚡\uE0B1 {{ if .Segments.Executiontime.Ms }}{{ if eq \"False\" (title (default \"False\" .Env.DISABLE_SEGMENT_TRANSIENT_EXEC_TIME)) }}\uFA1E {{ .Segments.Executiontime.FormattedMs }} \uE621 {{ end }}{{ end }}<b>{{ if eq .Code 0 }}OK{{ else if eq .Code 1 }}FAIL{{ else if eq .Code 130 }}TERM{{ else }}Code{{ end }} ({{ .Code }})</b></><{{ if eq .Code 0 }}p:c-badge-return-success{{ else if or (eq .Code 1) (eq .Code 130) }}p:c-badge-return-fail-term{{ else }}p:c-badge-return-custom{{ end }}>\uE0B4</> {{ end }} "
     },
     "secondary_prompt": {
       "background": "transparent",
@@ -172,4 +172,4 @@
   }
   
   // "template": "{{ if eq \"False\" (title (default \"False\" .Env.DISABLE_SEGMENT_TRANSIENT)) }}<{{ if eq .Code 0 }}p:c-badge-return-success{{ else if or (eq .Code 1) (eq .Code 130) }}p:c-badge-return-fail-term{{ else }}p:c-badge-return-custom{{ end }}>\uE0B6</><p:c-badge-text,{{ if eq .Code 0 }}p:c-badge-return-success{{ else if or (eq .Code 1) (eq .Code 130) }}p:c-badge-return-fail-term{{ else }}p:c-badge-return-custom{{ end }}>\uF55D \uE0B1 {{ if .Segments.Executiontime.Ms }}{{ if eq \"False\" (title (default \"False\" .Env.DISABLE_SEGMENT_TRANSIENT_EXEC_TIME)) }}\uFA1E {{ .Segments.Executiontime.FormattedMs }} \uE621 {{ end }}{{ end }}<b>{{ if eq .Code 0 }}OK{{ else if eq .Code 1 }}FAIL{{ else if eq .Code 130 }}TERM{{ else }}Code{{ end }} ({{ .Code }})</b></><{{ if eq .Code 0 }}p:c-badge-return-success{{ else if or (eq .Code 1) (eq .Code 130) }}p:c-badge-return-fail-term{{ else }}p:c-badge-return-custom{{ end }}>\uE0B4</> {{ end }}\u276F "
-  
+  // "template": " <p:c-badge-return-success>\uE0B6⚡</p> {{ .Segments.Executiontime.FormattedMs }}\uE0B4</> "

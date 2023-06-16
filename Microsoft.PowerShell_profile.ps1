@@ -10,7 +10,7 @@
 function _checkParam {
     param (
         [Parameter()] [string] $Value,
-        [Parameter()] [string] $ErrorMessage
+        [Parameter()] [string] $ErrorMessage = "Please provide a value"
     )
 
     if( (!$Value) -or ($Value -eq '') )
@@ -20,15 +20,32 @@ function _checkParam {
     }
 }
 
+Set-Alias GetFolder Get-PathToFolder
+function Get-PathToFolder
+{
+    param ([string]$FilePath )
+    _checkParam $FilePath "Please provide a file path to use this command"
+
+    $folderPath = $FilePath
+
+    if( (Get-Item $FilePath) -isnot [System.IO.DirectoryInfo] ){
+        $folderPath = Split-Path -Path $FilePath
+    }
+
+    return $folderPath
+}
+
 Set-Alias Theme Set-PoshTheme
 function Set-PoshTheme
 {
     param (
-        [string]$themeName,
-        [string]$source = $env:POSH_THEMES_PATH)
+            [Parameter(Position=0)] [string]$themeName,
+            [Parameter(Position=1)] [string]$source = $env:POSH_THEMES_PATH
+        )
+
     _checkParam $themeName
 
-    $pathToTheme = $source + "\" + $themeName + ".omp.json"
+    $pathToTheme = $source + "/" + $themeName + ".omp.json"
 
     $exists = Test-Path -Path $pathToTheme -PathType Leaf
     if ($exists -eq $false)
@@ -45,7 +62,10 @@ function Set-PoshTheme
 # > winget install janDeDobbeleer.OhMyPosh
 # > oh-my-posh font install 
 $env:POSH_GIT_ENABLED = $true
-# Set-PoshTheme uniForm
+
+# Set-PoshTheme uniForm  GetFolder($Profile)
+Set-PoshTheme uniForm (GetFolder ($PROFILE))
+#Set-PoshTheme unicorn
 
 
 Set-Alias Rename Move-Item
@@ -80,21 +100,6 @@ function Open-Folder {
     }
 
     explorer.exe $folderPath
-}
-
-Set-Alias GetFolder Get-PathToFolder
-function Get-PathToFolder
-{
-    param ([string]$FilePath )
-    _checkParam $FilePath "Please provide a file path to use this command"
-
-    $folderPath = $FilePath
-
-    if( (Get-Item $FilePath) -isnot [System.IO.DirectoryInfo] ){
-        $folderPath = Split-Path -Path $FilePath
-    }
-
-    return $folderPath
 }
 
 function GitW {
