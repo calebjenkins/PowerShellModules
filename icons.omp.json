@@ -190,7 +190,30 @@
             "trailing_diamond": "\ue0b4",
             "powerline_symbol": "\ue0b0",
             "style":  "diamond",
-            "template": "lightning: \uE315 Battery: \uF579 \uF57A \uF57C \uF57D \uF57E \uF580 \uF581 \uF578 cal-clock:\uF5EF ",
+            "template": "lightning: \uE315 Battery: \uF579 \uF57A \uF57C \uF57D \uF57E \uF580 \uF581 \uF578 cal-clock:\uF5EF  Octo:\uEB27   \uEB1e   \uEBA4 \uEB31 \uEB44 \uEB47 \uEB58 \uEB52 \uEA81 \uEB6D \uEB72 \uEA6C \uEA85 \uE711 \uE799 \uE702 \uE795 \uF179 \uf240   \uF1E2 \uF293 \uF0F3 \uF0E7 \uF0A1 \uF00C \uF0C1 \uF0F4 \uF013 \uF086 \uF0F5 \uF0E4 \uF0E0 \uF044 \uF0E0 \uF0E7 \uF0C3 \uF11B \uF09B \uF21E \uF015 \uF084 \uF17C \uF023 \uF001 \uF19B \uF0C6 \uF072 \uF03E \uF095 \uF1B0 \uF074 \uF1D0 \uF2CE \uF1B8 \uF135 \uF09E \uF1D8 \uF1DE \uF005 \uF02B \uF2C7 \uF2BB \uE268 \uE272 \uE23F \uE244 \uE24A \uE2A1 \uE221 \uE222 \uE22D \uE231 \uE234 \uE238 \uE217 \u23FB \uE702 \uE725 \uE728 \uE325   ",
+            // https://www.nerdfonts.com/cheat-sheet
+            "type": "session",
+            "properties": {
+              "windows": "\ue62a "
+            }
+          }
+        ],
+        "type": "prompt"
+      }
+      ,
+      {
+        "alignment": "left",
+        "newline": true,
+        "segments": [
+          {
+            "background": "#1975b2",
+            "foreground": "#ffffff",
+            "leading_diamond": "\ue0b6",
+            "trailing_diamond": "\ue0b4",
+            "powerline_symbol": "\ue0b0",
+            "style":  "diamond",
+            "template": "https://www.nerdfonts.com/cheat-sheet ",
+            // https://www.nerdfonts.com/cheat-sheet
             "type": "session",
             "properties": {
               "windows": "\ue62a "
