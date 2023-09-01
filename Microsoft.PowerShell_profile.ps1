@@ -111,7 +111,14 @@ function GitW {
     $branch = git branch --show-current
     if($branch -NE '')
     {
-        $repoUrl = $repoUrl + '/tree/' + $branch
+        if($reportUrl -Match "bitbucket.")
+        {
+            $repoUrl = $repoUrl + '/browse?at=%2Fheads%2F' + $branch
+        }
+        if($reportUrl -Match "github.com")
+        {
+            $repoUrl = $repoUrl + '/tree/' + $branch
+        }
     }
 
     # Start-Process chrome $repoUrl
@@ -243,6 +250,8 @@ function Initialize-GitRepo {
     Add-GitIgnoreFile
     git add .
     git commit -m "initial commit"
+
+    Write-Output "Git Directory Initialized and .gitignore added 🚀"
 
 }
 
