@@ -9,7 +9,7 @@ function Add-CurrentDirectoryToModulePath {
     }
 }
 
-#Add-CurrentDirectoryToModulePath
+# Add-CurrentDirectoryToModulePath
 
 # Public Function (Having one declared forces the rest to be private)
 function Import-ModuleIfNeeded {

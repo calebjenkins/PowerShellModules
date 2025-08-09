@@ -1,7 +1,5 @@
 
 
-#Load Private Functions
-#. './_privFunctions.ps1'
 
 function Open-GitRemoteUrl {
     param ([Parameter()] [string] $RemoteName = "origin" )
