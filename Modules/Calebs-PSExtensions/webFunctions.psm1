@@ -9,20 +9,25 @@ function Open-Web {
 Set-Alias web Open-Web
 Export-ModuleMember -Function Open-Web -Alias web
 
-function pshelp {
+function Open-PowerShellHelpSearch {
     $Message = _argsToString $args
     _checkParam $Message "Search string is needed for PSHelp"
 
-    websearch "PowerShell $Message"
+    Open-WebSearch "PowerShell $Message"
 }
+Set-Alias pshelp Open-PowerShellHelpSearch
+Export-ModuleMember -Function Open-PowerShellHelpSearch -Alias pshelp
+
 
 # Open Browser, Search Bing for Sring that is passed in
-Set-Alias whelp websearch #web help
-function websearch {
+function Open-WebSearch {
     $Message = _argsToString $args
     
     _web-lookup $Message "https://www.bing.com/search?q="
 }
+Set-Alias whelp Open-WebSearch
+Export-ModuleMember -Function Open-WebSearch -Alias whelp
+
 
 function websearchg {
     $Message = _argsToString $args

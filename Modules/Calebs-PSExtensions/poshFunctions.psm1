@@ -1,9 +1,5 @@
 
-#Load Private Functions
-#. './_privFunctions.ps1'
 
-
-Set-Alias Theme Set-PoshTheme
 function Set-PoshTheme {
     param (
         [Parameter(Position = 0)] [string]$themeName,
@@ -12,17 +8,42 @@ function Set-PoshTheme {
 
     _checkParam $themeName
 
-    $pathToTheme = $source + "/" + $themeName + ".omp.json"
+    $extension = ".omp.json"
+    if ($themeName.EndsWith($extension))
+    {
+        $extension = ""
+    } 
+
+    $pathToTheme = Join-Path -Path $source -ChildPath ($themeName + $extension)
 
     $exists = Test-Path -Path $pathToTheme -PathType Leaf
     if ($exists -eq $false) {
-        Write-Output "Theme not found"
+        Write-Output "Theme not found - $pathToTheme"
         break
     }
 
     oh-my-posh init pwsh --config $pathToTheme | Invoke-Expression
 }
-Export-ModuleMember -Function Set-PoshTheme
+Set-Alias Theme Set-PoshTheme
+Export-ModuleMember -Function Set-PoshTheme -Alias Theme
+
+function Invoke-PoshThemes {
+    
+    $source = $env:POSH_THEMES_PATH
+
+    if (-not (Test-Path -Path $source -PathType Container)) {
+        Write-Output "Themes directory not found"
+        return @()
+    }
+
+    $themes = Get-ChildItem -Path $source -Filter "*.omp.json" | Select-Object -ExpandProperty Name
+    
+    $selected = $themes | Out-GridView -Title "Select a theme" -PassThru
+    Write-Host "You selected: $selected"
+
+    Set-PoshTheme -themeName $selected
+}
+Export-ModuleMember -Function Invoke-PoshThemes
 
 function Set-UpPostGit {
     ## SET UP ##
@@ -92,7 +113,8 @@ function Get-UserSettings {
 
     if (Test-Path $settingsPath) {
         return Get-Content $settingsPath | ConvertFrom-Json
-    } else {
+    }
+    else {
         Write-Output "No settings found for $App. Returning empty object."
         return @{}
     }

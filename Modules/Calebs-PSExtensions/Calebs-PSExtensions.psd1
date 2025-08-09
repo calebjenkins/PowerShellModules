@@ -6,7 +6,7 @@
     Description       = 'PowerShell module of useful cmdlet extensions'
     PowerShellVersion = '7.0'
     NestedModules  = @(
-                '_privFunctions.ps1',
+                '_privFunctions.psm1',
                 'extensionFunctions.psm1',
                 'gitFunctions.psm1',
                 'fileFunctions.psm1',

@@ -19,7 +19,7 @@ function Import-ModuleIfNeeded {
     _checkParam $ModuleName "Please provide a module name"
 
     if (-not (Get-Module -ListAvailable -Name $ModuleName)) {
-        Install-Module -Name $ModuleName -Scope CurrentUser -Force 
+        Install-Module -Name $ModuleName -Scope CurrentUser -Force -Repository PSGallery
     }
     
     Import-Module -Name $ModuleName -Global
