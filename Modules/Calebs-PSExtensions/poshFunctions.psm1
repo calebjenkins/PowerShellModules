@@ -15,6 +15,7 @@ function Set-PoshTheme {
     } 
 
     $pathToTheme = Join-Path -Path $source -ChildPath ($themeName + $extension)
+    Write-Debug $pathToTheme
 
     $exists = Test-Path -Path $pathToTheme -PathType Leaf
     if ($exists -eq $false) {
@@ -24,10 +25,9 @@ function Set-PoshTheme {
 
     oh-my-posh init pwsh --config $pathToTheme | Invoke-Expression
 }
-Set-Alias Theme Set-PoshTheme
-Export-ModuleMember -Function Set-PoshTheme -Alias Theme
+Export-ModuleMember -Function Set-PoshTheme
 
-function Invoke-PoshThemes {
+function Invoke-PoshTheme {
     
     $source = $env:POSH_THEMES_PATH
 
@@ -43,7 +43,7 @@ function Invoke-PoshThemes {
 
     Set-PoshTheme -themeName $selected
 }
-Export-ModuleMember -Function Invoke-PoshThemes
+Export-ModuleMember -Function Invoke-PoshTheme
 
 function Set-UpPostGit {
     ## SET UP ##
