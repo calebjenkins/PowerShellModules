@@ -1,6 +1,4 @@
 
-#Load Private Functions
-#. './_privFunctions.ps1'
 
 function Add-CurrentDirectoryToModulePath {
     $currentDir = (Get-Location).Path + "/Modules/"
@@ -33,4 +31,4 @@ function Get-CalebPSExtensionVersion
     Write-Output $MyInvocation.MyCommand.Module.Version
 }
 Set-Alias -Name Calebs-Version -Value Get-CalebPSExtensionVersion
-Export-ModuleMember -Function Get-CalebPSExtensionVersion
+Export-ModuleMember -Function Get-CalebPSExtensionVersion -Alias Calebs-Version
