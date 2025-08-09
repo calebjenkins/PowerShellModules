@@ -1,2 +1,2 @@
-Remove-Module Calebs-PSExtensions
-Import-Module -Name './Modules/Calebs-PSExtensions/Calebs-PSExtensions.psd1' -Verbose
+# Remove-Module Calebs-PSExtensions -Verbose -Force
+Import-Module -Name './Modules/Calebs-PSExtensions/' -Verbose -Force 

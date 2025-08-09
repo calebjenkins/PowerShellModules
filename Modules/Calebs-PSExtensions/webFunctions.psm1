@@ -1,3 +1,14 @@
+
+
+function Open-Web {
+    $Message = _argsToString $args
+    _checkParam $Message "Please include a URL in web command."
+
+    Start-Process $Message
+}
+Set-Alias web Open-Web
+Export-ModuleMember -Function Open-Web -Alias web
+
 function pshelp {
     $Message = _argsToString $args
     _checkParam $Message "Search string is needed for PSHelp"
@@ -49,11 +60,3 @@ function websearchg {
     web $searchString
 }
  
-
-Set-Alias web Open-Web
-function Open-Web {
-    $Message = _argsToString $args
-    _checkParam $Message "Please include a URL in web command."
-
-    Start-Process msedge $Message
-}

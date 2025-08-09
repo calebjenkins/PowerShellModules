@@ -1,3 +1,8 @@
+
+#Load Private Functions
+#. './_privFunctions.ps1'
+
+
 Set-Alias Theme Set-PoshTheme
 function Set-PoshTheme {
     param (
@@ -17,6 +22,7 @@ function Set-PoshTheme {
 
     oh-my-posh init pwsh --config $pathToTheme | Invoke-Expression
 }
+Export-ModuleMember -Function Set-PoshTheme
 
 function Set-UpPostGit {
     ## SET UP ##
@@ -33,7 +39,7 @@ function Set-PoshFont {
         [string]$FontName = "MesloLGM Nerd Font"
     )
 
-    _CheckWindows
+    _checkWindows
 
     # Ensure Oh My Posh is installed
     if (-not (Get-Command oh-my-posh -ErrorAction SilentlyContinue)) {
@@ -57,7 +63,7 @@ function Set-WindowsTerminalDefaultFont {
         [string]$FontName = "Cascadia Code"
     )
 
-    _CheckWindows
+    _checkWindows
 
     $settingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
     $settings = Get-Content $settingsPath -Raw | ConvertFrom-Json
@@ -73,3 +79,46 @@ function Set-WindowsTerminalDefaultFont {
         Write-Host "Default profile not found."
     }
 }
+
+
+function Get-UserSettings {
+    param (
+        [string] $App
+    )
+
+    _checkParam $App "Please provide an application name"
+
+    $settingsPath = "$env:USERPROFILE\.powershell\$App-settings.json"
+
+    if (Test-Path $settingsPath) {
+        return Get-Content $settingsPath | ConvertFrom-Json
+    } else {
+        Write-Output "No settings found for $App. Returning empty object."
+        return @{}
+    }
+}
+Export-ModuleMember -Function Get-UserSettings
+
+function Set-UserSetting {
+    param(
+        [string] $App,
+        [string]$Key,
+        [string]$Value
+    )
+    _checkParam $App "Please provide an application name"
+    _checkParam $Key "Please provide a setting key"
+    _checkParam $Value "Please provide a setting value"
+    
+    $settingsPath = "$env:USERPROFILE\.powershell\$App-settings.json"
+    $settings = Get-UserSettings $App
+    $settings.$Key = $Value
+    
+    # Ensure directory exists
+    $settingsDir = Split-Path $settingsPath
+    if (!(Test-Path $settingsDir)) {
+        New-Item -ItemType Directory -Path $settingsDir -Force
+    }
+    
+    $settings | ConvertTo-Json | Out-File $settingsPath
+}
+Export-ModuleMember -Function Set-UserSetting

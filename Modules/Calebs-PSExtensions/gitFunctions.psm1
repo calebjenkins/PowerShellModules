@@ -1,4 +1,8 @@
 
+
+#Load Private Functions
+#. './_privFunctions.ps1'
+
 function Open-GitRemoteUrl {
     param ([Parameter()] [string] $RemoteName = "origin" )
 
@@ -21,6 +25,7 @@ function Open-GitRemoteUrl {
     # Start-Process chrome $repoUrl
     Start-Process $repoUrl
 }
+Set-Alias gitw Open-GitRemoteUrl
 Export-ModuleMember -Function Open-GitRemoteUrl -Alias gitw
 
 
@@ -204,6 +209,6 @@ function Get-GitClone {
 
     git clone $url
 }
-
+Export-ModuleMember -Function Get-GitClone
 Set-Alias -Name clone -Value Get-GitClone
 

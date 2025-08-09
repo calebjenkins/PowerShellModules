@@ -1,3 +1,7 @@
+
+#Load Private Functions
+#. './_privFunctions.ps1'
+
 function Get-PathToFolder
 {
     param ([string]$FilePath )
