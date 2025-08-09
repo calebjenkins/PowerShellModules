@@ -5,15 +5,14 @@
     Copyright         = '(c) Caleb Jenkins. All rights reserved.'
     Description       = 'PowerShell module of useful cmdlet extensions'
     PowerShellVersion = '7.0'
-    NestedModules  = 
-                @(
+    NestedModules  = @(
                 '_privFunctions.psm1',
                 'gitFunctions.psm1',
                 'fileFunctions.psm1',
                 'poshFunctions.psm1',
-                'terminalFunctions.psm1',
                 'webFunctions.psm1'
-                )
+    )
+
     PrivateData       = @{
         PSData = @{
             Tags         = @('PowerShell', 'Extensions')

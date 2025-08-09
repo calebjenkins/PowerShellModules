@@ -14,6 +14,7 @@ function Get-PathToFolder
 Set-Alias GetFolder Get-PathToFolder
 
 Set-Alias Rename Move-Item
+Set-Alias Open Invoke-Item
 
 function FindFile{
     param ( [string]$filePattern)
@@ -33,4 +34,18 @@ function DirSize {
 
     # Export Data
     [PSCustomObject]@{ "Folder" = $Folder; "SubFolderCount" = $folderCount; "FileCount" = $fileCount; "TotalSize (MB)" = $fileSize}
+}
+
+
+function Open-Folder {
+    param ( [string]$FilePath )
+    _checkParam $FilePath "Please provide a file path to use this command"
+
+    $folderPath = $FilePath
+
+    if( (Get-Item $FilePath) -isnot [System.IO.DirectoryInfo]){
+        $folderPath = Split-Path -Path $FilePath
+    }
+
+    Invoke-Item $folderPath
 }

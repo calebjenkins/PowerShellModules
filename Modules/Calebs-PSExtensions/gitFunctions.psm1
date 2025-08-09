@@ -23,6 +23,44 @@ function Open-GitRemoteUrl {
 }
 Export-ModuleMember -Function Open-GitRemoteUrl -Alias gitw
 
+
+function _gitGetConfigValue {
+    param (
+        [Parameter()] [string] $key
+    )
+
+    $value = git config --global --get $key
+    return $value
+}
+
+function _gitSetConfigValue {
+    param (
+        [Parameter()] [string] $key,
+        [Parameter()] [string] $value
+    )
+
+    _checkParam $key "Please provide a key to set in git config"
+    _checkParam $value "Please provide a value to set in git config"
+
+    git config --global $key $value
+}
+
+function _gitCheckConfigValue {
+    param (
+        [Parameter()] [string] $key
+    )
+
+    _checkParam $key "Please provide a key to set in git config"
+
+    $currentValue = _gitGetConfigValue $key
+    if( !$currentValue )
+    {
+        Write-Output "Enter a value for $key :"
+        $value = Read-Host
+        _gitSetConfigValue $key $value
+    }
+}
+
 function Write-GitBranchName () {
     try {
         $branch = git rev-parse --abbrev-ref HEAD
@@ -156,4 +194,16 @@ function _getGitRemoteURL{
     
     return $repoUrl
 }
+
+function Get-GitClone {
+    param (
+        [Parameter()] [string] $url
+    )
+
+    _checkParam $url "Please provide a git url to clone"
+
+    git clone $url
+}
+
+Set-Alias -Name clone -Value Get-GitClone
 
