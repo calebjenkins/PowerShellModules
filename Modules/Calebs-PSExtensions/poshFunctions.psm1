@@ -45,6 +45,33 @@ function Invoke-PoshTheme {
 }
 Export-ModuleMember -Function Invoke-PoshTheme
 
+function _Set-ProfileEntry {
+    param (
+        [string]$Key,
+        [string]$KeySegment = $Key,
+        [string] $profilePath = $PROFILE
+    )
+
+    _checkParam $Key "Please provide a profile key"
+
+    if (-not (Test-Path $profilePath)) {
+        New-Item -ItemType File -Path $profilePath -Force
+    }
+
+    $content = Get-Content $profilePath
+
+    if($content.Contains($KeySegment)
+    {
+        Write-Output "$KeySegment' already exists in the profile - nothing added."
+        break;
+    }
+
+    $content = "`n ## Added by script `n$Key`n`n" + $content
+    $content | Set-Content $profilePath
+}
+
+
+
 function Set-UpPostGit {
     ## SET UP ##
     # Before you can use oh-my-posh on Windows: #
@@ -53,7 +80,6 @@ function Set-UpPostGit {
     Set-PoshFont
     $env:POSH_GIT_ENABLED = $true
 }
-
 
 function Set-PoshFont {
     param (
@@ -101,7 +127,6 @@ function Set-WindowsTerminalDefaultFont {
     }
 }
 
-
 function Get-UserSettings {
     param (
         [string] $App
@@ -119,7 +144,6 @@ function Get-UserSettings {
         return @{}
     }
 }
-Export-ModuleMember -Function Get-UserSettings
 
 function Set-UserSetting {
     param(
@@ -143,4 +167,4 @@ function Set-UserSetting {
     
     $settings | ConvertTo-Json | Out-File $settingsPath
 }
-Export-ModuleMember -Function Set-UserSetting
+
