@@ -7,4 +7,10 @@ Describe "Calebs-Version" {
     }
 }
 
+Describe "Test Test" {
+    It "Should be 2" {
+        $result = 1 + 1
+        $result | Should -Be 2
+    }
+}
 # Add more Describe blocks for other functions as needed
