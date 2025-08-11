@@ -60,7 +60,7 @@ function _Set-ProfileEntry {
 
     $content = Get-Content $profilePath
 
-    if($content.Contains($KeySegment)
+    if($content.Contains($KeySegment))
     {
         Write-Output "$KeySegment' already exists in the profile - nothing added."
         break;

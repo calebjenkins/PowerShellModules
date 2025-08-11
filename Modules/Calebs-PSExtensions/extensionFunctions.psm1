@@ -1,7 +1,14 @@
 
 
-function Add-CurrentDirectoryToModulePath {
-    $currentDir = (Get-Location).Path + "/Modules/"
+function Add-DirectoryToModulePath {
+param (
+    [string]$FolderPath
+)
+
+_checkParam $FolderPath "Please provide a folder path to add to the PSModulePath"
+
+    $currentDir = $FolderPath
+    
     $paths = $env:PSModulePath -split ';'
     if ($paths -notcontains $currentDir) {
         $env:PSModulePath += ";$currentDir"
