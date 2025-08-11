@@ -1,11 +1,63 @@
 
+$ModuleAsciiTitle =
+@"
+ .------------------------------------------------------------------.
+ |                                                                  |
+ |     ____      _      _     _                                     |
+ |    / ___|__ _| | ___| |__ ( )___                                 |
+ |   | |   / _` | |/ _ \ '_ \|// __|                                |
+ |   | |__| (_| | |  __/ |_) | \__ \                                |
+ |    \____\__,_|_|\___|_.__/  |___/                                |
+ |    ____  ____  _____      _                 _                    |
+ |   |  _ \/ ___|| ____|_  _| |_ ___ _ __  ___(_) ___  _ __  ___    |
+ |   | |_) \___ \|  _| \ \/ / __/ _ \ '_ \/ __| |/ _ \| '_ \/ __|   |
+ |   |  __/ ___) | |___ >  <| ||  __/ | | \__ \ | (_) | | | \__ \   |
+ |   |_|   |____/|_____/_/\_\\__\___|_| |_|___/_|\___/|_| |_|___/   |
+ | github.com/calebjenkins/PowerShellModules      DevelopingUX.com  |
+ |                                                                  |
+ '------------------------------------------------------------------'"
+"@
 
+function Get-CalebPSExtensionVersion {
+    param (
+        [switch]$about = $false,
+        [switch]$help = $false
+    )
+
+    if ($about) {
+        Write-Output "This function retrieves the version of the Caleb's PowerShell Extensions module."
+        return
+    }
+
+    if ($help) {
+        Write-Output "Get-CalebPSExtensionVersion - Returns the version of the Caleb's PowerShell Extensions module."
+        return
+    }
+
+    Write-Output $MyInvocation.MyCommand.Module.Version
+}
+Set-Alias -Name Calebs-Version -Value Get-CalebPSExtensionVersion
+Export-ModuleMember -Function Get-CalebPSExtensionVersion -Alias Calebs-Version
+
+
+
+
+#          ____
+#         / _\ \
+#       .'\/  \ \
+#     ,'   \   \ \
+#      / /-'    \ \ .
+#     / /       ,\ '|
+#    / /        '-._|
+#   / /_.'|________\_\
+#   \/_<  ___________/
+#       '.|
 function Add-DirectoryToModulePath {
-param (
-    [string]$FolderPath
-)
+    param (
+        [string]$FolderPath
+    )
 
-_checkParam $FolderPath "Please provide a folder path to add to the PSModulePath"
+    _checkParam $FolderPath "Please provide a folder path to add to the PSModulePath"
 
     $currentDir = $FolderPath
     
@@ -16,9 +68,6 @@ _checkParam $FolderPath "Please provide a folder path to add to the PSModulePath
     }
 }
 
-# Add-CurrentDirectoryToModulePath
-
-# Public Function (Having one declared forces the rest to be private)
 function Import-ModuleIfNeeded {
     param (
         [string] $ModuleName
@@ -32,10 +81,3 @@ function Import-ModuleIfNeeded {
     Import-Module -Name $ModuleName -Global
 }
 Export-ModuleMember -Function Import-ModuleIfNeeded
-
-function Get-CalebPSExtensionVersion
-{
-    Write-Output $MyInvocation.MyCommand.Module.Version
-}
-Set-Alias -Name Calebs-Version -Value Get-CalebPSExtensionVersion
-Export-ModuleMember -Function Get-CalebPSExtensionVersion -Alias Calebs-Version
