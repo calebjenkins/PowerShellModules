@@ -1,6 +1,7 @@
 
-$ModuleAsciiTitle =
-@"
+function _writeTitle {
+
+    Write-Output "
  .------------------------------------------------------------------.
  |                                                                  |
  |     ____      _      _     _                                     |
@@ -15,9 +16,9 @@ $ModuleAsciiTitle =
  |   |_|   |____/|_____/_/\_\\__\___|_| |_|___/_|\___/|_| |_|___/   |
  | github.com/calebjenkins/PowerShellModules      DevelopingUX.com  |
  |                                                                  |
- '------------------------------------------------------------------'"
-"@
-
+ '------------------------------------------------------------------'
+"
+}
 function Get-CalebPSExtensionVersion {
     param (
         [switch]$about = $false,
@@ -25,21 +26,17 @@ function Get-CalebPSExtensionVersion {
     )
 
     if ($about) {
-        Write-Output "This function retrieves the version of the Caleb's PowerShell Extensions module."
-        return
+        _writeTitle
     }
 
     if ($help) {
         Write-Output "Get-CalebPSExtensionVersion - Returns the version of the Caleb's PowerShell Extensions module."
-        return
     }
 
     Write-Output $MyInvocation.MyCommand.Module.Version
 }
 Set-Alias -Name Calebs-Version -Value Get-CalebPSExtensionVersion
 Export-ModuleMember -Function Get-CalebPSExtensionVersion -Alias Calebs-Version
-
-
 
 
 #          ____
@@ -70,14 +67,21 @@ function Add-DirectoryToModulePath {
 
 function Import-ModuleIfNeeded {
     param (
-        [string] $ModuleName
+        [string] $ModuleName,
+        [switch] $verbose = $false
     )
     _checkParam $ModuleName "Please provide a module name"
 
+    if ($verbose) {
+        Write-Host "Checking if module '$ModuleName' is needed..."
+    }
+
     if (-not (Get-Module -ListAvailable -Name $ModuleName)) {
+        if ($verbose) {
+            Write-Host "Module '$ModuleName' is not installed. Installing..."
+        }
         Install-Module -Name $ModuleName -Scope CurrentUser -Force -Repository PSGallery
     }
-    
-    Import-Module -Name $ModuleName -Global
+    Import-Module -Name $ModuleName -Global -Force
 }
 Export-ModuleMember -Function Import-ModuleIfNeeded
