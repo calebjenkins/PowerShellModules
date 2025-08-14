@@ -11,8 +11,7 @@
                 'gitFunctions.psm1',
                 'fileFunctions.psm1',
                 'poshFunctions.psm1',
-                'webFunctions.psm1',
-                'Write-Ascii.psm1'
+                'webFunctions.psm1'
     )
     
     PrivateData       = @{

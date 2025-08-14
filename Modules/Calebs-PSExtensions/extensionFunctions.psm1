@@ -68,6 +68,7 @@ function Add-DirectoryToModulePath {
 function Import-ModuleIfNeeded {
     param (
         [string] $ModuleName,
+        [switch] $allowClobber = $false,
         [switch] $verbose = $false
     )
     _checkParam $ModuleName "Please provide a module name"
@@ -80,7 +81,7 @@ function Import-ModuleIfNeeded {
         if ($verbose) {
             Write-Host "Module '$ModuleName' is not installed. Installing..."
         }
-        Install-Module -Name $ModuleName -Scope CurrentUser -Force -Repository PSGallery
+        Install-Module -Name $ModuleName -Scope CurrentUser -Force -Repository PSGallery -AllowClobber:$allowClobber
     }
     Import-Module -Name $ModuleName -Global -Force
 }
