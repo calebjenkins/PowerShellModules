@@ -7,7 +7,6 @@ function _checkParam {
     )
 
     if ( (!$Value) -or ($Value -eq '') ) {
-        Write-Output $ErrorMessage
         break
     }
 }

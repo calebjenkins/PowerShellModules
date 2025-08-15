@@ -102,7 +102,7 @@ function git-prompt {
     return $userPrompt
 }
 
-function gitc {
+function Invoke-GitCommitAndPush {
     $Message = _argsToString $args
     _checkParam $Message "Please include comment text for this commit."
 
@@ -112,8 +112,10 @@ function gitc {
     git commit -m "$message"
     git push
 }
+Set-Alias gitc Invoke-GitCommitAndPush
+Export-ModuleMember -Function Invoke-GitCommitAndPush -Alias gitc
 
-Set-Alias gitinit Initialize-GitRepo
+
 function Initialize-GitRepo {
     param(
         [Parameter(Position=0)] [string] $IgnoreStyle = "VisualStudio"
@@ -133,8 +135,10 @@ function Initialize-GitRepo {
     Write-Output "Git Directory Initialized and .gitignore added 🚀"
 
 }
+Set-Alias gitinit Initialize-GitRepo
+Export-ModuleMember -Function Initialize-GitRepo -Alias gitinit
 
-Set-Alias gitignore Add-GitIgnoreFile
+
 function Add-GitIgnoreFile {
     param(
         [Parameter(Position=0)] [string] $IgnoreStyle = "VisualStudio",
@@ -164,6 +168,8 @@ function Add-GitIgnoreFile {
         }
     }
 }
+Set-Alias gitignore Add-GitIgnoreFile
+Export-ModuleMember -Function Add-GitIgnoreFile -Alias gitignore
 
 function _isGitRepo{
     $result = git rev-parse --is-inside-work-tree
