@@ -19,6 +19,9 @@ Set-Alias GetFolder Get-PathToFolder
 Set-Alias Rename Move-Item
 Set-Alias Open Invoke-Item
 
+Export-ModuleMember -Alias GetFolder, Rename, Open
+
+## Not Used Publically (Yet) ##
 function FindFile {
     param ( [string]$filePattern)
     Get-ChildItem -Recurse -Filter $filePattern

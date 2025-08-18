@@ -61,12 +61,19 @@ Public functions that are used to manage and set up these extensions and other e
 
 ### fileFunctions
 Useful functions for working with files. These are mostly cross platform, however GetFolder (super usefull) hasn't worked on mac os for a bit.
+  - **Get-PathToFolder** (alias: _GetFolder_) - this returns the full path to a provider folder, or to the parent folder if a file path is supplied. For example, you can use this to change director to the folder with `$PROFILE` in it by using `> CD GetFolder($PROFILE)` 
+  - **Alias: Raname** - we set this alias for `Move-Item` so that `Rename` can work in PowerShell
+  - **Alias: Open** - we set this alias for `Invoke-Item` (also `ii`) so that `open` can work in PowerShell
 
 ### gitFunctions
 Functions to make working with git super enjoyable.
+  - **Open-GitRemopteUrl** (alias: _gitw_) - opens the `origin` remote url in a browser for a git repo that you are in. Attempts to take you to the URL for the current branch.
+    - Parameter (optional): **RemoteName** this defaults to `origin` but you can optionally specific a remote url. This is especially useful if you have an `upstream` remote, and you would like to open that instead or `origin`
+  - **Invoke-GitCommitAndPush** (alias: _gitc_) - performs `git add .`, followed by `git commit $message` then `git push`.
+    - Usage: `gitc "This is my commit message"` 
 
 ### poshFunctions
-We like Oh My Posh. These functions are designed to make setting up and modifying oh my posh even easier.
+We like `Oh My Posh`. These functions are designed to make setting up and modifying oh my posh even easier.
 
 ### webFunctions
 Do you use the web all the time? Us too! These are PS functions that mostly allow you to launch web activities from your terminal.

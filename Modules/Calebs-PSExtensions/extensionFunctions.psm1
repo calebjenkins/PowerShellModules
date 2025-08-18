@@ -61,9 +61,26 @@ function Import-ModuleIfNeeded {
 }
 Export-ModuleMember -Function Import-ModuleIfNeeded
 
+
+#          ____
+#         / _\ \
+#       .'\/  \ \
+#     ,'   \   \ \
+#      / /-'    \ \ .
+#     / /       ,\ '|
+#    / /        '-._|
+#   / /_.'|________\_\
+#   \/_<  ___________/
+#       '.|
+
+### Not *Yet* Used ###
+
 function Add-ImportToProfile {
     param (
-        [string]$ModuleName
+        [string]$ModuleName,
+        [switch]$verbose = $false,
+        [switch]$prepend = $false,
+        [switch]$showEdits = $false
     )
 
     _checkParam $ModuleName "Please provide a module name"
@@ -78,19 +95,6 @@ function Add-ImportToProfile {
     }
 }
 
-
-#          ____
-#         / _\ \
-#       .'\/  \ \
-#     ,'   \   \ \
-#      / /-'    \ \ .
-#     / /       ,\ '|
-#    / /        '-._|
-#   / /_.'|________\_\
-#   \/_<  ___________/
-#       '.|
-
-### Not *Yet* Used ###
 
 function Add-DirectoryToModulePath {
     param (
