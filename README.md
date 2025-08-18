@@ -1,4 +1,4 @@
-# PowerShellModules
+# Calebs-PSExtensions
 a collection of PowerShell modules that might be helpful.
 
 
@@ -28,10 +28,11 @@ Import-Module Caleb's PSExensions
       - 📄poshFunctions.psm1
       - 📄webFunctions.psm1
       - 📄Write-Ascii.psm1
-    - 📁Calebs-PSExtensions-Tests
+    - 📁Calebs-PSExtensions-Tests (Currently un-used, experimenting with Pester)
 - 📄publish.ps1
 - 📄Reload.ps1
 - 📄README.md
+- 📄SetUp-LocalDev.ps1
 
 ## Structure Details
 
@@ -39,12 +40,24 @@ Import-Module Caleb's PSExensions
 This file represents the overall module (collections of methods). This is used for publishing, versioning and managing dependencies.
 
 ### _privFunctions
-These functions are used by othere functions, not of them are intended to be used directly.
+These functions are used by othere functions, not of them are intended to be used directly. By convention private functions do not attempt to follow PowerShell Verb-Noun naming conventions and are all prefixed with an `_`underscore.
 
   - **_checkParam** - Checks that the supplied `[string]` parameter is not blank or empty. Provides a more user friendly experience and halts execution if the parameter is missing. It's like making a paremter required, only nicer.
+  - **_argToString** - Takes in all parameters and joins them as a single string. 
+  - **_checkIntValue** - Similiar to `_checkParam` only this is designed to work with int values, and confirm they are within a specific range.
+  - **_checkWindows** - confirms that the host OS is Windows, and provides a friendly message and halts execution if it is not. 
 
 ### extensionFunctions
 Public functions that are used to manage and set up these extensions and other environment dependencies. For example, loading external modules or updating PowerShell profiles.
+  - **Get-CalebsPSExtensionVersion** (alias _Calebs-Version_) - Displays the version of the Calebs-PSExtensions that is installed. 
+    - Flags / Parameters:
+      - **--about** - displays a welcome message in ascii art
+      - **--help** - displays a list of available commandlets included with `Calebs-PSExtensions`
+  - **Import-ModuleIfNeeded** (alias: none) - This method first checks if the module is locally available, and if it's not performs `Install-Module` before calling `Import-Module`.
+    - Flags / Parameters:
+      - **ModuleName** - The only required parameter (string). The name of the module to Install/Import.
+      - **allowClobber** (flag) - This is passed through to the Install-Module call. Usefull if you know there is a potencial naming or alias collision.
+      - **verbose** (flag) - when included, more logging is output to the terminal.
 
 ### fileFunctions
 Useful functions for working with files. These are mostly cross platform, however GetFolder (super usefull) hasn't worked on mac os for a bit.
@@ -57,3 +70,6 @@ We like Oh My Posh. These functions are designed to make setting up and modifyin
 
 ### webFunctions
 Do you use the web all the time? Us too! These are PS functions that mostly allow you to launch web activities from your terminal.
+
+## History
+- 0.5.0 - initial publish of 6 `Calebs-PSExtensions modules files. 

@@ -1,6 +1,6 @@
 
 # Dev
- $devModules = '~/Source/GH/_CJ/PowerShellModules/Modules/'
+ $devModules = './Modules/'
  $paths = $env:PSModulePath -split ';'
     if ($paths -notcontains $devModules) {
         $env:PSModulePath += ";$devModules"

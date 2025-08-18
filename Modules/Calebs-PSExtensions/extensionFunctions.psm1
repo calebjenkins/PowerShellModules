@@ -6,7 +6,7 @@ function _writeTitle {
  |                                                                  |
  |     ____      _      _     _                                     |
  |    / ___|__ _| | ___| |__ ( )___                                 |
- |   | |   / _` | |/ _ \ '_ \|// __|                                |
+ |   | |   / _`  | |/ _ \ '_ \|// __|                                |
  |   | |__| (_| | |  __/ |_) | \__ \                                |
  |    \____\__,_|_|\___|_.__/  |___/                                |
  |    ____  ____  _____      _                 _                    |
@@ -39,32 +39,6 @@ Set-Alias -Name Calebs-Version -Value Get-CalebPSExtensionVersion
 Export-ModuleMember -Function Get-CalebPSExtensionVersion -Alias Calebs-Version
 
 
-#          ____
-#         / _\ \
-#       .'\/  \ \
-#     ,'   \   \ \
-#      / /-'    \ \ .
-#     / /       ,\ '|
-#    / /        '-._|
-#   / /_.'|________\_\
-#   \/_<  ___________/
-#       '.|
-function Add-DirectoryToModulePath {
-    param (
-        [string]$FolderPath
-    )
-
-    _checkParam $FolderPath "Please provide a folder path to add to the PSModulePath"
-
-    $currentDir = $FolderPath
-    
-    $paths = $env:PSModulePath -split ';'
-    if ($paths -notcontains $currentDir) {
-        $env:PSModulePath += ";$currentDir"
-        Write-Host "Added $currentDir to PSModulePath."
-    }
-}
-
 function Import-ModuleIfNeeded {
     param (
         [string] $ModuleName,
@@ -86,3 +60,91 @@ function Import-ModuleIfNeeded {
     Import-Module -Name $ModuleName -Global -Force
 }
 Export-ModuleMember -Function Import-ModuleIfNeeded
+
+function Add-ImportToProfile {
+    param (
+        [string]$ModuleName
+    )
+
+    _checkParam $ModuleName "Please provide a module name"
+
+    $profilePath = $PROFILE
+    $profileContent = Get-Content $profilePath -Raw
+
+    if ($profileContent -notmatch "Import-Module $ModuleName") {
+        $profileContent += "`nImport-Module $ModuleName"
+        Set-Content -Path $profilePath -Value $profileContent
+        Write-Host "Added 'Import-Module $ModuleName' to $profilePath"
+    }
+}
+
+
+#          ____
+#         / _\ \
+#       .'\/  \ \
+#     ,'   \   \ \
+#      / /-'    \ \ .
+#     / /       ,\ '|
+#    / /        '-._|
+#   / /_.'|________\_\
+#   \/_<  ___________/
+#       '.|
+
+### Not *Yet* Used ###
+
+function Add-DirectoryToModulePath {
+    param (
+        [string]$FolderPath
+    )
+
+    _checkParam $FolderPath "Please provide a folder path to add to the PSModulePath"
+
+    $currentDir = $FolderPath
+    
+    $paths = $env:PSModulePath -split ';'
+    if ($paths -notcontains $currentDir) {
+        $env:PSModulePath += ";$currentDir"
+        Write-Host "Added $currentDir to PSModulePath."
+    }
+}
+
+function Get-UserSettings {
+    param (
+        [string] $App
+    )
+
+    _checkParam $App "Please provide an application name"
+
+    $settingsPath = "$env:USERPROFILE\.powershell\$App-settings.json"
+
+    if (Test-Path $settingsPath) {
+        return Get-Content $settingsPath | ConvertFrom-Json
+    }
+    else {
+        Write-Output "No settings found for $App. Returning empty object."
+        return @{}
+    }
+}
+
+function Set-UserSetting {
+    param(
+        [string] $App,
+        [string]$Key,
+        [string]$Value
+    )
+    _checkParam $App "Please provide an application name"
+    _checkParam $Key "Please provide a setting key"
+    _checkParam $Value "Please provide a setting value"
+    
+    $settingsPath = "$env:USERPROFILE\.powershell\$App-settings.json"
+    $settings = Get-UserSettings $App
+    $settings.$Key = $Value
+    
+    # Ensure directory exists
+    $settingsDir = Split-Path $settingsPath
+    if (!(Test-Path $settingsDir)) {
+        New-Item -ItemType Directory -Path $settingsDir -Force
+    }
+    
+    $settings | ConvertTo-Json | Out-File $settingsPath
+}
