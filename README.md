@@ -82,4 +82,4 @@ We like `Oh My Posh`. These functions are designed to make setting up and modify
 Do you use the web all the time? Us too! These are PS functions that mostly allow you to launch web activities from your terminal.
 
 ## History
-- 0.5.0 - initial publish of 6 `Calebs-PSExtensions modules files. 
+- 0.5.0 - initial publish the core `Calebs-PSExtensions modules files. 

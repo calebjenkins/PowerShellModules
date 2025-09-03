@@ -15,11 +15,12 @@ function Get-PathToFolder {
     return $folderPath
 }
 Set-Alias GetFolder Get-PathToFolder
+Export-ModuleMember -Function Get-PathToFolder -Alias GetFolder
 
 Set-Alias Rename Move-Item
 Set-Alias Open Invoke-Item
 
-Export-ModuleMember -Alias GetFolder, Rename, Open
+Export-ModuleMember -Alias Rename, Open
 
 ## Not Used Publically (Yet) ##
 function FindFile {
