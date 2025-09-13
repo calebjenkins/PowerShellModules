@@ -1,5 +1,5 @@
 @{
-    ModuleVersion     = '0.0.5'
+    ModuleVersion     = '0.0.5.4'
     Author            = 'Caleb Jenkins'
     CompanyName       = 'DevelopingUX'
     Copyright         = '(c) Caleb Jenkins. All rights reserved.'

@@ -95,7 +95,6 @@ function Add-ImportToProfile {
     }
 }
 
-
 function Add-DirectoryToModulePath {
     param (
         [string]$FolderPath
@@ -151,4 +150,128 @@ function Set-UserSetting {
     }
     
     $settings | ConvertTo-Json | Out-File $settingsPath
+}
+
+function SetUp-CalebExtensions {
+    param (
+        [switch]$verbose = $false,
+        [switch]$help = $false,
+        [switch]$all = $false,
+        [switch]$updateProfile = $false,
+        [switch]$TerminalIcons = $false
+    )
+
+    
+    $allParams = @($verbose, $help, $all, $updateProfile, $TerminalIcons)
+    if ($help -and (($allParams -notcontains $true))) {
+        _printSetUpHelp
+        return
+    }
+
+    Import-ModuleIfNeeded -ModuleName "Calebs-PSExtensions" -verbose:$verbose -allowClobber
+
+    if($all -or $profile) {
+        Add-ImportToProfile -ModuleName "Calebs-PSExtensions" -verbose:$verbose
+    }
+
+}
+
+function _printSetUpHelp
+{
+    Calebs-Version -about
+    Write-Output "SetUp-CalebExtensions - Sets up Caleb's PowerShell Extensions module for use."
+    Write-Output "This includes importing the module and adding it to your PowerShell profile for automatic loading."
+    Write-Output ""
+    Write-Output "Parameters:"
+    Write-Output "  -verbose : Enables verbose output during setup."
+    Write-Output "  -all     : (Future Use) Sets up all related modules and dependencies."
+    Write-Output ""
+    Write-Output "Example Usage:"
+    Write-Output "  SetUp-CalebExtensions -verbose"
+}
+
+function Install-Application
+{
+    param (
+        [string]$AppName,
+        [switch]$verbose = $false
+    )
+
+    _checkParam $AppName "Please provide an application name to install"
+
+    if($IsWindows)
+    {
+        _install-Application-Winget $AppName -verbose:$verbose
+    }
+    elseif ($IsMacOS)
+    {
+        _install-Application-HomeBrew $AppName -verbose:$verbose
+    }   
+    else 
+    {
+        Write-Output "Unsupported OS for application installation."
+    }
+}
+
+function _printVerbose  
+{
+    param (
+        [string]$Message,
+        [switch]$verbose = $false
+    )
+
+    if ($verbose) {
+        Write-Host $Message
+    }
+}
+
+function _install-Application-Winget
+{
+    param (
+        [string]$AppName,
+        [switch]$verbose = $false
+    )
+    _checkWindows
+
+    winget list -q $AppName | Out-Null
+
+    if ($?) {  _printVerbose "$AppName aleady installed", $verbose; return }
+
+    winget install --id $AppName -e --source winget
+
+switch ($AppName.ToLower()) {
+        "vscode" {
+            if ($verbose) { Write-Host "Installing $AppName ..." }
+            winget install --id $AppName -e --source winget
+        }
+        
+        default {
+            Write-Output "'$AppName' not found."
+        }
+    }
+}
+
+function _install-Application-HomeBrew
+{
+    param (
+        [string]$AppName,
+        [switch]$verbose = $false
+    )
+
+# Check if the application is installed via Homebrew
+$installed = brew list --formula | Where-Object { $_ -eq $AppName }
+
+if ($installed) {
+    Write-Host "$AppName is already installed via Homebrew."
+} else {
+    Write-Host "$AppName is not installed. Installing now..."
+    brew install $AppName
+
+    # Confirm installation
+    if (brew list --formula | Where-Object { $_ -eq $AppName }) {
+        Write-Host "$AppName was successfully installed."
+    } else {
+        Write-Host "Failed to install $AppName."
+    }
+}
 }
