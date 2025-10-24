@@ -158,11 +158,13 @@ function SetUp-CalebExtensions {
         [switch]$help = $false,
         [switch]$all = $false,
         [switch]$updateProfile = $false,
-        [switch]$TerminalIcons = $false
+        [switch]$TerminalIcons = $false,
+        [switch]$ohmyposh = $false,
+        [switch]$vscode = $false
     )
 
-    
-    $allParams = @($verbose, $help, $all, $updateProfile, $TerminalIcons)
+
+    $allParams = @($verbose, $help, $all, $updateProfile, $TerminalIcons, $ohmyposh, $vscode)
     if ($help -and (($allParams -notcontains $true))) {
         _printSetUpHelp
         return
@@ -170,9 +172,35 @@ function SetUp-CalebExtensions {
 
     Import-ModuleIfNeeded -ModuleName "Calebs-PSExtensions" -verbose:$verbose -allowClobber
 
-    if($all -or $profile) {
+    if($all -or $updateProfile) {
         Add-ImportToProfile -ModuleName "Calebs-PSExtensions" -verbose:$verbose
     }
+
+    if($all -or $TerminalIcons) {
+        Import-ModuleIfNeeded -ModuleName "Terminal-Icons" -verbose:$verbose -allowClobber
+        if($all -or $updateProfile) {
+            Add-ImportToProfile -ModuleName "Terminal-Icons" -verbose:$verbose
+        }
+    }
+    if($all -or $vscode) {
+        Install-Application "Microsoft.VisualStudioCode" -verbose:$verbose
+        if($ohmyposh)
+        {
+            oh-my-posh font install meslo    
+        }
+        # Set Terminal font to MesloLGM Nerd Font
+        # Set VS Code Terminal font to MesloLGM Nerd Font
+    }
+
+    if($all -or $ohmyposh) {
+        Install-Application "janDeDobbeleer.OhMyPosh" -verbose:$verbose
+        $env:POSH_GIT_ENABLED = $true
+
+        oh-my-posh font install meslo
+        Set-WindowsTerminalDefaultFont  "MesloLGM Nerd Font"
+
+    }
+
 
 }
 
